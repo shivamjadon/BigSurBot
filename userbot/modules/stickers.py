@@ -67,7 +67,7 @@ async def kang(args):
             is_anim = True
             photo = 1
         else:
-            return await args.edit("`Unsupported File!`")
+            return await args.edit("`Unsupported file!`")
     else:
         return await args.edit("`I can't kang that...`")
 
@@ -124,7 +124,7 @@ async def kang(args):
                     packname = f"a{user.id}_by_{user.username}_{pack}"
                     packnick = f"@{user.username}'s kang pack Vol.{pack}"
                     await args.edit(
-                        "`Switching to Pack "
+                        "`Switching to pack "
                         + str(pack)
                         + " due to insufficient space`"
                     )
@@ -170,7 +170,7 @@ async def kang(args):
                         return await args.edit(
                             "`Sticker added in a different pack!"
                             "\nThis pack is newly created."
-                            f"\nYour pack can be found `[here](t.me/addstickers/{packname})"
+                            f"\nYour pack can be found [here](t.me/addstickers/{packname})."
                         )
                 if is_anim:
                     await conv.send_file("AnimatedSticker.tgs")
@@ -192,7 +192,7 @@ async def kang(args):
                 # Ensure user doesn't get spamming notifications
                 await bot.send_read_acknowledge(conv.chat_id)
         else:
-            await args.edit("`Brewing a new Pack...`")
+            await args.edit("Brewing a new pack...")
             async with bot.conversation("Stickers") as conv:
                 await conv.send_message(cmd)
                 await conv.get_response()
@@ -201,6 +201,7 @@ async def kang(args):
                 await conv.send_message(packnick)
                 await conv.get_response()
                 # Ensure user doesn't get spamming notifications
+                await args.edit("A new pack has been brewed. Adding this sticker...")
                 await bot.send_read_acknowledge(conv.chat_id)
                 if is_anim:
                     await conv.send_file("AnimatedSticker.tgs")
@@ -237,7 +238,7 @@ async def kang(args):
 
         await args.edit(
             "Sticker has been added to my pack!"
-            f"\nPack can be found [here](t.me/addstickers/{packname})",
+            f"\nPack can be found [here](t.me/addstickers/{packname}).",
             parse_mode="md",
         )
 

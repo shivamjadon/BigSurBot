@@ -29,7 +29,7 @@ async def fban(event):
 
     if fban_id == self_user.id or fban_id == "@" + self_user.username:
         return await event.edit(
-            "**Error: This action has been prevented by KensurBot self preservation protocols.**"
+            "**Error: This action has been prevented by BigSur bot self preservation protocols.**"
         )
 
     if len((fed_list := get_flist())) == 0:
@@ -67,7 +67,7 @@ async def fban(event):
         for i in failed:
             status += "• " + i + "\n"
     else:
-        status = f"Success! Fbanned in {total} feds."
+        status = f"Fbanned in {total} fed(s)."
 
     await event.edit(
         f"**Fbanned **{user_link}!\n**Reason:** {reason}\n**Status:** {status}"
@@ -96,7 +96,7 @@ async def unfban(event):
     self_user = await event.client.get_me()
 
     if unfban_id == self_user.id or unfban_id == "@" + self_user.username:
-        return await event.edit("**Wait, that's illegal**")
+        return await event.edit("You what?")
 
     if len((fed_list := get_flist())) == 0:
         return await event.edit("**You haven't connected any federations yet!**")
@@ -132,7 +132,7 @@ async def unfban(event):
         for i in failed:
             status += "• " + i + "\n"
     else:
-        status = f"Success! Un-fbanned in {total} feds."
+        status = f"Un-fbanned in {total} feds."
 
     reason = reason if reason else "Not specified."
     await event.edit(

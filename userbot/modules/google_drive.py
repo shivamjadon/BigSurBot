@@ -136,9 +136,9 @@ async def generate_credentials(gdrive):
         """ - Only for old user - """
         if G_DRIVE_CLIENT_ID is None and G_DRIVE_CLIENT_SECRET is None:
             await gdrive.edit(
-                "`[AUTHENTICATE - ERROR]`\n\n"
-                "`Status` : **BAD**\n"
-                "`Reason` : please get your **G_DRIVE_DATA** "
+                "[AUTHENTICATION - ERROR]\n\n"
+                "Status : **BAD**\n"
+                "Reason : please get your **G_DRIVE_DATA** "
                 "[here](https://telegra.ph/How-To-Setup-Google-Drive-04-03)"
             )
             return False
@@ -277,7 +277,7 @@ async def download(gdrive, service, uri=None):
             os.remove(newest)
             reply += (
                 "`[FILE - CANCELLED]`\n\n"
-                "`Status` : **OK** - received signal cancelled."
+                "`Status` : **OK** - received cancel signal."
             )
             return reply
         else:

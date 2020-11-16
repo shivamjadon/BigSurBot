@@ -30,12 +30,12 @@ async def fastpurger(purg):
                 await purg.client.delete_messages(chat, msgs)
                 msgs = []
     else:
-        return await purg.edit("`I need a mesasge to start purging from.`")
+        return await purg.edit("I need a message to start purging from.")
 
     if msgs:
         await purg.client.delete_messages(chat, msgs)
     done = await purg.client.send_message(
-        purg.chat_id, "`Fast purge complete!`" f"\nPurged {str(count)} messages"
+        purg.chat_id, "Flash purge complete!" f"\nPurged {str(count)} messages."
     )
     """
     if BOTLOG:
@@ -88,7 +88,7 @@ async def delete_it(delme):
                     BOTLOG_CHATID, "Deletion of message was successful")
             """
         except rpcbaseerrors.BadRequestError:
-            await delme.edit("Well, I can't delete a message")
+            await delme.edit("Well, I can't delete the messages.")
             """
             if BOTLOG:
                 await delme.client.send_message(
