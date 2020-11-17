@@ -22,7 +22,6 @@ from userbot.events import register
 
 KANGING_STR = [
     "Adding this sticker to my pack...",
-    "Copying this sticker to my pack...",
 ]
 
 
@@ -40,11 +39,11 @@ async def kang(args):
 
     if message and message.media:
         if isinstance(message.media, MessageMediaPhoto):
-            await args.edit(f"`{random.choice(KANGING_STR)}`")
+            await args.edit(f"{random.choice(KANGING_STR)}")
             photo = io.BytesIO()
             photo = await bot.download_media(message.photo, photo)
         elif "image" in message.media.document.mime_type.split("/"):
-            await args.edit(f"`{random.choice(KANGING_STR)}`")
+            await args.edit(f"{random.choice(KANGING_STR)}")
             photo = io.BytesIO()
             await bot.download_file(message.media.document, photo)
             if (
@@ -55,7 +54,7 @@ async def kang(args):
                 if emoji != "":
                     emojibypass = True
         elif "tgsticker" in message.media.document.mime_type:
-            await args.edit(f"`{random.choice(KANGING_STR)}`")
+            await args.edit(f"{random.choice(KANGING_STR)}")
             await bot.download_file(message.media.document, "AnimatedSticker.tgs")
 
             attributes = message.media.document.attributes
@@ -237,8 +236,7 @@ async def kang(args):
                 await bot.send_read_acknowledge(conv.chat_id)
 
         await args.edit(
-            "Sticker has been added to my pack!"
-            f"\nPack can be found [here](t.me/addstickers/{packname}).",
+            f"Sticker has been added to [this](t.me/addstickers/{packname}) pack.",
             parse_mode="md",
         )
 
