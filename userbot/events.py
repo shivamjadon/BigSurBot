@@ -97,15 +97,15 @@ def register(**args):
                     date = strftime("%Y-%m-%d %H:%M:%S", gmtime())
 
                     text = "**USERBOT ERROR REPORT**\n"
-                    link = "[Support Chat](https://t.me/KenVerseChat)"
+                    link = "[Support Chat](https://t.me/PratyakshChat)"
                     text += "If you want to, you can report it"
-                    text += f"- just forward this message to {link}.\n"
-                    text += "I won't log anything except the fact of error and date\n"
+                    text += f" - just forward this message to {link}.\n"
+                    text += "I won't log anything except the fact of error and date.\n"
 
-                    ftext = "\nDisclaimer:\nThis file uploaded ONLY here, "
-                    ftext += "we logged only fact of error and date, "
-                    ftext += "we respect your privacy, "
-                    ftext += "you may not report this error if you've "
+                    ftext = "\nDisclaimer:\nThis file is uploaded ONLY here, "
+                    ftext += "We've logged only fact of error and date, "
+                    ftext += "We respect your privacy, "
+                    ftext += "You may not report this error if you've "
                     ftext += "any confidential data here, no one will see your data "
                     ftext += "if you choose not to do so.\n\n"
                     ftext += "--------BEGIN USERBOT TRACEBACK LOG--------"
