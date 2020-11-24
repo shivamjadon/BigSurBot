@@ -1,4 +1,9 @@
 # BigSurBot
+
+### **Alert:** This is the development/staging branch of BigSur bot. Unless you want to test stuff out for me, you shall be using the [main](https://github.com/pratyakshm/BigSurBot/tree/main) branch.
+
+&nbsp;
+
 ```
 #include <std/disclaimer.h>
 /**
@@ -7,7 +12,6 @@
     This bot is intended for having fun as well as helping you
     efficiently manage groups and automate some boring stuff.
     Use this bot at your own risk, and use it sensibly.
-    I will not be held accountable if ender1324 spams your PM.
 /**
 ```
 
