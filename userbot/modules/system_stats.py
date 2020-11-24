@@ -118,7 +118,7 @@ async def amireallyalive(alive):
     """ For .alive command, check if the bot is running.  """
     await alive.edit(
         "**BigSur bot** is online.\n\n"
-        f"Bot :  v0.2\n"
+        f"Bot:  v0.2\n"
         f"Python:   {python_version()}\n"
         f"User:  {DEFAULTUSER}"
     )

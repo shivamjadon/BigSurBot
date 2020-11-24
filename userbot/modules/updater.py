@@ -36,7 +36,7 @@ async def gen_chlog(repo, diff):
 
 async def print_changelogs(event, ac_br, changelog):
     changelog_str = (
-        f"Updates are available for BigSur bot in the **{ac_br}** branch!\n\n**Changelog:**\n{changelog}"
+        f"**Updates are available** in the **{ac_br}** branch.\n\n**Changelog:**\n{changelog}"
     )
     if len(changelog_str) > 4096:
         await event.edit("**Changelog is too big, sending as a file.**")
@@ -128,7 +128,7 @@ async def update(event, repo, ups_rem, ac_br):
 @register(outgoing=True, pattern=r"^\.update( now| deploy|$)")
 async def upstream(event):
     "For .update command, check if the bot is up to date, update if specified"
-    await event.edit("**Checking for updates...**")
+    await event.edit("Checking for updates...")
     conf = event.pattern_match.group(1).strip()
     off_repo = UPSTREAM_REPO_URL
     force_update = False
@@ -182,13 +182,13 @@ async def upstream(event):
         return
 
     if changelog == "" and not force_update:
-        await event.edit(f"**BigSur** is up-to-date on the `{UPSTREAM_REPO_BRANCH}` branch.")
+        await event.edit(f"**BigSur** bot is up-to-date on the `{UPSTREAM_REPO_BRANCH}` branch!")
         return repo.__del__()
 
     if conf == "" and force_update is False:
         await print_changelogs(event, ac_br, changelog)
         await event.delete()
-        return await event.respond("Do `.update now` to apply quick quality rollup or `.update deploy` to perform a full update.")
+        return await event.respond("Do `.update now` to apply quick rollup or `.update deploy` to perform a full update.")
 
     if force_update:
         await event.edit(
