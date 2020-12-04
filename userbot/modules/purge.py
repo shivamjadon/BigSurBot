@@ -47,33 +47,6 @@ async def fastpurger(purg):
     await done.delete()
 
 
-@register(outgoing=True, pattern=r"^\.purgeme")
-async def purgeme(delme):
-    """ For .purgeme, delete x count of your latest message."""
-    message = delme.text
-    count = int(message[9:])
-    i = 1
-
-    async for message in delme.client.iter_messages(delme.chat_id, from_user="me"):
-        if i > count + 1:
-            break
-        i += 1
-        await message.delete()
-
-    smsg = await delme.client.send_message(
-        delme.chat_id, "`Purge complete!` Purged " + str(count) + " messages.",
-    )
-    """
-    if BOTLOG:
-        await delme.client.send_message(
-            BOTLOG_CHATID,
-            "Purge of " + str(count) + " messages done successfully.")
-    """
-    await sleep(2)
-    i = 1
-    await smsg.delete()
-
-
 @register(outgoing=True, pattern=r"^\.del$")
 async def delete_it(delme):
     """ For .del command, delete the replied message. """
@@ -96,53 +69,9 @@ async def delete_it(delme):
             """
 
 
-@register(outgoing=True, pattern=r"^\.edit")
-async def editer(edit):
-    """ For .editme command, edit your last message. """
-    message = edit.text
-    chat = await edit.get_input_chat()
-    self_id = await edit.client.get_peer_id("me")
-    string = str(message[6:])
-    i = 1
-    async for message in edit.client.iter_messages(chat, self_id):
-        if i == 2:
-            await message.edit(string)
-            await edit.delete()
-            break
-        i += 1
-    """
-    if BOTLOG:
-        await edit.client.send_message(BOTLOG_CHATID,
-                                       "Edit query was executed successfully")
-   """
-
-
-@register(outgoing=True, pattern=r"^\.sd")
-async def selfdestruct(destroy):
-    """ For .sd command, make seflf-destructable messages. """
-    message = destroy.text
-    counter = int(message[4:6])
-    text = str(destroy.text[6:])
-    await destroy.delete()
-    smsg = await destroy.client.send_message(destroy.chat_id, text)
-    await sleep(counter)
-    await smsg.delete()
-    """
-    if BOTLOG:
-        await destroy.client.send_message(BOTLOG_CHATID,
-                                          "sd query done successfully")
-    """
-
-
-CMD_HELP.update({"purge": ">`.purge`"
+CMD_HELP.update({"purge": ">.purge"
                  "\nUsage: Purges all messages starting from the reply.",
-                 "purgeme": ">`.purgeme <x>`"
-                 "\nUsage: Deletes x amount of your latest messages.",
-                 "del": ">`.del`"
+                 "del": ">.del"
                  "\nUsage: Deletes the message you replied to.",
-                 "edit": ">`.edit <newmessage>`"
-                 "\nUsage: Replace your last message with <newmessage>.",
-                 "sd": ">`.sd <x> <message>`"
-                 "\nUsage: Creates a message that selfdestructs in x seconds."
-                 "\nKeep the seconds under 100 since it puts your bot to sleep.",
+
                  })

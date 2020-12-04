@@ -34,83 +34,9 @@ async def sysdetails(sysd):
             result = str(stdout.decode().strip()) + \
                 str(stderr.decode().strip())
 
-            await sysd.edit("`" + result + "`")
+            await sysd.edit("" + result + "")
         except FileNotFoundError:
-            await sysd.edit("`Install neofetch first!`")
-
-
-@register(outgoing=True, pattern=r"^\.botver$")
-async def bot_ver(event):
-    """ For .botver command, get the bot version. """
-    if event.text[0].isalpha() or event.text[0] in ("/", "#", "@", "!"):
-        return
-    if which("git") is not None:
-        ver = await asyncrunapp(
-            "git", "describe", "--all", "--long", stdout=asyncPIPE, stderr=asyncPIPE,
-        )
-        stdout, stderr = await ver.communicate()
-        verout = str(stdout.decode().strip()) + str(stderr.decode().strip())
-
-        rev = await asyncrunapp(
-            "git", "rev-list", "--all", "--count", stdout=asyncPIPE, stderr=asyncPIPE,
-        )
-        stdout, stderr = await rev.communicate()
-        revout = str(stdout.decode().strip()) + str(stderr.decode().strip())
-
-        await event.edit(
-            "`"
-            f"Userbot  : {verout}\n"
-            f"Revision : {revout}\n"
-            f"Telethon : {version.__version__}\n"
-            "`"
-        )
-    else:
-        await event.edit(
-            "Shame that you don't have git, you're running - 'v1.beta.4' anyway!"
-        )
-
-
-@register(outgoing=True, pattern=r"^\.pip(?: |$)(.*)")
-async def pipcheck(pip):
-    """ For .pip command, do a pip search. """
-    if pip.text[0].isalpha() or pip.text[0] in ("/", "#", "@", "!"):
-        return
-    pipmodule = pip.pattern_match.group(1)
-    if pipmodule:
-        await pip.edit("`Searching . . .`")
-        pipc = await asyncrunapp(
-            "pip3", "search", pipmodule, stdout=asyncPIPE, stderr=asyncPIPE,
-        )
-
-        stdout, stderr = await pipc.communicate()
-        pipout = str(stdout.decode().strip()) + str(stderr.decode().strip())
-
-        if pipout:
-            if len(pipout) > 4096:
-                await pip.edit("`Output too large, sending as file`")
-                file = open("output.txt", "w+")
-                file.write(pipout)
-                file.close()
-                await pip.client.send_file(
-                    pip.chat_id, "output.txt", reply_to=pip.id,
-                )
-                remove("output.txt")
-                return
-            await pip.edit(
-                "**Query: **\n`"
-                f"pip3 search {pipmodule}"
-                "`\n**Result: **\n`"
-                f"{pipout}"
-                "`"
-            )
-        else:
-            await pip.edit(
-                "**Query: **\n`"
-                f"pip3 search {pipmodule}"
-                "`\n**Result: **\n`No Result Returned/False`"
-            )
-    else:
-        await pip.edit("`Use .help pip to see an example`")
+            await sysd.edit("Install neofetch first!")
 
 
 @register(outgoing=True, pattern=r"^\.alive$")
@@ -134,7 +60,7 @@ async def amireallyaliveuser(username):
         global DEFAULTUSER
         DEFAULTUSER = newuser
         output = "Successfully changed user to " + newuser + "!"
-    await username.edit("`" f"{output}" "`")
+    await username.edit("" f"{output}" "")
 
 
 @register(outgoing=True, pattern=r"^\.resetalive$")
@@ -142,19 +68,13 @@ async def amireallyalivereset(ureset):
     """ For .resetalive command, reset the username in the .alive command. """
     global DEFAULTUSER
     DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
-    await ureset.edit("`" "Successfully reset user for alive!" "`")
+    await ureset.edit("" "Successfully reset user for alive!" "")
 
 
-CMD_HELP.update({"sysd": ">`.sysd`"
-                 "\nUsage: Shows system information using neofetch.",
-                 "botver": ">`.botver`"
-                 "\nUsage: Shows the userbot version.",
-                 "pip": ">`.pip <module(s)>`"
-                 "\nUsage: Does a search of pip modules(s).",
-                 "alive": ">`.alive`"
+CMD_HELP.update({"alive": ">.alive"
                  "\nUsage: Type .alive to see wether your bot is working or not."
-                 "\n\n>`.aliveu <text>`"
+                 "\n\n>.aliveu <text>"
                  "\nUsage: Changes the 'user' in alive to the text you want."
-                 "\n\n>`.resetalive`"
+                 "\n\n>.resetalive"
                  "\nUsage: Resets the user to default.",
                  })
