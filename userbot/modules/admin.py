@@ -240,9 +240,9 @@ async def ban(bon):
     # is done gracefully
     # Shout out the ID, so that fedadmins can fban later
     if reason:
-        await bon.edit(f"`{str(user.id)}` has been banned.\nReason: {reason}")
+        await bon.edit(f"`{str(user.id)}` is banned.\nReason: {reason}")
     else:
-        await bon.edit(f"`{str(user.id)}` has been banned.")
+        await bon.edit(f"`{str(user.id)}` is banned.")
     # Announce to the logging group if we have banned the person
     # successfully!
     if BOTLOG:
@@ -276,7 +276,7 @@ async def nothanos(unbon):
 
     try:
         await unbon.client(EditBannedRequest(unbon.chat_id, user.id, UNBAN_RIGHTS))
-        await unbon.edit("User has been unbanned.")
+        await unbon.edit("User was unbanned.")
 
         if BOTLOG:
             await unbon.client.send_message(
@@ -335,9 +335,9 @@ async def spider(spdr):
 
         # Announce that the function is done
         if reason:
-            await spdr.edit(f"User has been muted.\nReason: {reason}")
+            await spdr.edit(f"User was muted.\nReason: {reason}")
         else:
-            await spdr.edit("User has been muted.")
+            await spdr.edit("User was muted.")
 
         # Announce to logging group
         if BOTLOG:
@@ -380,7 +380,7 @@ async def unmoot(unmot):
 
         try:
             await unmot.client(EditBannedRequest(unmot.chat_id, user.id, UNBAN_RIGHTS))
-            await unmot.edit("User has been unmuted.")
+            await unmot.edit("User was unmuted.")
         except UserIdInvalidError:
             return await unmot.edit("Uh oh my unmute logic broke!")
         except UserAdminInvalidError:
@@ -589,10 +589,10 @@ async def kick(usr):
 
     if reason:
         await usr.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) has been kicked.\nReason: {reason}"
+            f"[{user.first_name}](tg://user?id={user.id}) was kicked.\nReason: {reason}"
         )
     else:
-        await usr.edit(f"[{user.first_name}](tg://user?id={user.id}) has been kicked.")
+        await usr.edit(f"[{user.first_name}](tg://user?id={user.id}) was kicked.")
 
     if BOTLOG:
         await usr.client.send_message(
