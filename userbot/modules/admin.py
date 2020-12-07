@@ -227,6 +227,46 @@ async def ban(bon):
         await bon.client(EditBannedRequest(bon.chat_id, user.id, BANNED_RIGHTS))
     except BadRequestError:
         return await bon.edit(NO_PERM)
+
+    # Shout out the ID, so that fedadmins can fban later
+    if reason:
+        await bon.edit(f"`{str(user.id)}` was banned.\nReason: {reason}")
+    else:
+        await bon.edit(f"`{str(user.id)}` was banned.")
+    # Announce to the logging group if we have banned the person
+    # successfully!
+    if BOTLOG:
+        await bon.client.send_message(
+            BOTLOG_CHATID,
+            "#BAN\n"
+            f"USER: [{user.first_name}](tg://user?id={user.id})\n"
+            f"CHAT: {bon.chat.title}(`{bon.chat_id}`)",
+        )
+
+
+@register(outgoing=True, pattern=r"^\.dban(?: |$)(.*)")
+async def ban(bon):
+    """ For .dban command, bans the replied/tagged person """
+    # Here laying the sanity check
+    chat = await bon.get_chat()
+    admin = chat.admin_rights
+    creator = chat.creator
+
+    # Well
+    if not (admin or creator):
+        return await bon.edit(NO_ADMIN)
+
+    user, reason = await get_user_from_event(bon)
+    if not user:
+        return
+
+    # Announce that we're going to whack the pest
+    await bon.edit("Banning this user...")
+
+    try:
+        await bon.client(EditBannedRequest(bon.chat_id, user.id, BANNED_RIGHTS))
+    except BadRequestError:
+        return await bon.edit(NO_PERM)
     # Helps ban group join spammers more easily
     try:
         reply = await bon.get_reply_message()
@@ -240,9 +280,9 @@ async def ban(bon):
     # is done gracefully
     # Shout out the ID, so that fedadmins can fban later
     if reason:
-        await bon.edit(f"`{str(user.id)}` is banned.\nReason: {reason}")
+        await bon.edit(f"`{str(user.id)}` was banned.\nReason: {reason}")
     else:
-        await bon.edit(f"`{str(user.id)}` is banned.")
+        await bon.edit(f"`{str(user.id)}` was banned.")
     # Announce to the logging group if we have banned the person
     # successfully!
     if BOTLOG:
@@ -252,6 +292,7 @@ async def ban(bon):
             f"USER: [{user.first_name}](tg://user?id={user.id})\n"
             f"CHAT: {bon.chat.title}(`{bon.chat_id}`)",
         )
+
 
 
 @register(outgoing=True, pattern=r"^\.unban(?: |$)(.*)")
@@ -834,6 +875,8 @@ CMD_HELP.update(
         "\nUsage: Demotes user in the chat."
         "\n\n>`.ban <username/reply> <reason (optional)>`"
         "\nUsage: Bans the person from the chat."
+        "\n\n>`.dban <username/reply> <reason (optional)>`"
+        "\nUsage: Bans the person from the chat and deletes the message replied to"
         "\n\n>`.unban <username/reply>`"
         "\nUsage: Unbans the person from the chat."
         "\n\n>`.mute <username/reply> <reason (optional)>`"
